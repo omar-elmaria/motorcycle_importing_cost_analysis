@@ -1,0 +1,4 @@
+.env
+scripts_of_leo/
+*.mp4
+__pycache__
