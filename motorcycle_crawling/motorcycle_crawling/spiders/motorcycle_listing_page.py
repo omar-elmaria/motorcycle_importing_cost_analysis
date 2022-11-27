@@ -1,5 +1,6 @@
 # Import the packages
 import scrapy
+from scrapy.crawler import CrawlerProcess
 from dotenv import load_dotenv
 from scraper_api import ScraperAPIClient
 import os
