@@ -26,3 +26,21 @@ The Scrapy code is located in this path `motorcycle_crawling\motorcycle_crawling
 For this part, I chose **Python Selenium**, which is a powerful tool for controlling web browsers via code. The steps I had to automate are shown in the GIF below.
 
 ![norwegian_calculator_steps](https://user-images.githubusercontent.com/98691360/204093926-7a5b4f40-9241-4077-8e55-c9819570bcf0.gif)
+
+The Selenium code is located in this file `norwegian_calculator.py`. The input to this script is the dataset scraped from the Polish website. In addition, the motorcycle prices in PLN need to be converted to NOK. To do this, we can use the **frankfurter app** API each time we want to calculated the import price. The APIreturns the converted price in JSON format
+
+```python
+def convert_currency(amount, from_currency, to_currency):
+    converted = requests.get(f"https://api.frankfurter.app/latest?amount={float(amount)}&from={from_currency}&to={to_currency}")
+    converted = converted.json()['rates'][to_currency]
+    return converted
+```
+
+After the Selenium code terminates, a column is appended to the data frame containing the scraped data. This column is called `calculated_price` and shows the **import price** in NOK. An exercpt of the **full dataset** is shown below...
+
+![image](https://user-images.githubusercontent.com/98691360/204143300-9e2db64e-bd6d-41a1-ad2c-511da93cbfe7.png)
+
+**Note:** Whenever one of the attributes required to calculate the price is missing, the `calculated_price` is set to **None**. For the sake of demonstration, I chose to run the script for the **first 8 entries** only. For that reason, `final_dataset.json` does not contain the `calculated_price` for all scraped motorcycles. However, the code is configured to loop over **all the entries** in `product_page.json`
+
+# 2. Questions?
+If you have any questions or wish to build a scraper for a particular use case (e.g., Competitive Intelligence or price comparison), feel free to contact me on [LinkedIn](https://www.linkedin.com/in/omar-elmaria/)
